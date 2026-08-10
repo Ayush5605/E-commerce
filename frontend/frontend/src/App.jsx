@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import AddProduct from "./components/AddProduct";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
+import UpdateProduct from "./components/UpdateProduct";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
         <Route path="/add_product" element={<AddProduct />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/product/update/:id" element={<UpdateProduct />}
+/>
       </Routes>
     </BrowserRouter>
   );
