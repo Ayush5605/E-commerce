@@ -50,10 +50,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/products/search?keyword=${encodeURIComponent(
-          value
-        )}`
-      );
+        `http://localhost:8080/api/products/search?keyword=${value}`);
 
       setSearchResults(response.data);
       setNoResults(response.data.length === 0);
