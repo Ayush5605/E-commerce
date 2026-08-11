@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -43,5 +44,9 @@ public class ProductService {
 
         return productRepo.save(product);
 
+    }
+
+    public void deleteProduct(int id){
+        productRepo.deleteById(id);
     }
 }
