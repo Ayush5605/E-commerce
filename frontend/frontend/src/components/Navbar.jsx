@@ -91,7 +91,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
             </div>
 
             <span className="brand-text">
-              Telusko<span>Store</span>
+              E-commerce <span>Store</span>
             </span>
           </a>
 
@@ -138,6 +138,15 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                   Add Product
                 </a>
               </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link custom-nav-link"
+                  href="/cart"
+                >
+                  <i className="bi bi-plus-square me-1"></i>
+                  Orders
+                </a>
+              </li>
 
               {/* Categories */}
               <li className="nav-item dropdown">
@@ -151,6 +160,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                   <i className="bi bi-grid me-1"></i>
                   Categories
                 </a>
+                
 
                 <ul className="dropdown-menu">
 
