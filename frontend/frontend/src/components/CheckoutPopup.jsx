@@ -15,11 +15,11 @@ const CheckoutPopup = ({ show, handleClose, cartItems = [], totalPrice = 0, hand
             {cartItems.map((item) => (
               <div 
                 key={item.id} 
-                className="checkout-item p-3 mb-3 border rounded-3 bg-body-tertiary d-flex align-items-center justify-content-between"
+                className="checkout-item-card p-3 mb-3 d-flex align-items-center justify-content-between"
               >
                 <div className="d-flex align-items-center gap-3">
-                  <div className="bg-primary-subtle p-3 rounded-3 text-primary">
-                    <i className="bi bi-box-seam fs-3"></i>
+                  <div className="checkout-icon-box">
+                    <i className="bi bi-box-seam fs-4"></i>
                   </div>
                   <div>
                     <h6 className="fw-bold mb-1">{item.name}</h6>
@@ -34,7 +34,7 @@ const CheckoutPopup = ({ show, handleClose, cartItems = [], totalPrice = 0, hand
               </div>
             ))}
             
-            <div className="p-3 rounded-3 bg-primary-subtle d-flex align-items-center justify-content-between mt-4">
+            <div className="checkout-total-box d-flex align-items-center justify-content-between mt-4">
               <h5 className="mb-0 fw-bold">Total Amount</h5>
               <h4 className="mb-0 fw-extrabold text-primary">
                 <i className="bi bi-currency-rupee"></i>{totalPrice}

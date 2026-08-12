@@ -1,8 +1,11 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import AppContext from "../Context/Context";
 
 const Navbar = ({ onSelectCategory, onSearch }) => {
+  const { cart } = useContext(AppContext);
+  const cartCount = cart ? cart.reduce((acc, item) => acc + (item.quantity || 1), 0) : 0;
  
   const getInitialTheme = () => {
     const storedTheme = localStorage.getItem("theme");
@@ -345,6 +348,9 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
               >
                 <i className="bi bi-cart3"></i>
                 <span>Cart</span>
+                {cartCount > 0 && (
+                  <span className="cart-count-badge">{cartCount}</span>
+                )}
               </a>
 
             </div>

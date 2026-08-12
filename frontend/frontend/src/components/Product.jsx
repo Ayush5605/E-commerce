@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppContext from "../Context/Context";
+import NewAppContext from "../Context/NewContext";
 
 const Product = () => {
   const { id } = useParams();
@@ -11,7 +12,9 @@ const Product = () => {
     addToCart,
     removeFromCart,
     refreshData,
-  } = useContext(AppContext);
+  } = useContext(NewAppContext);
+
+ 
 
   const [product, setProduct] = useState(null);
 

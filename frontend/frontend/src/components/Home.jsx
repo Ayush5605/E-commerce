@@ -4,7 +4,7 @@ import axios from "axios";
 import AppContext from "../Context/Context";
 
 const Home = () => {
-  const { data, isError, refreshData } = useContext(AppContext);
+  const { data, isError, refreshData, addToCart } = useContext(AppContext);
 
   const [products, setProducts] = useState([]);
 
@@ -187,6 +187,7 @@ const Home = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      addToCart(product);
                     }}
                   >
                     <i className="bi bi-cart-plus-fill"></i>

@@ -1,17 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
-import AppContext from "../Context/NewContext.jsx";
+import NewAppContext from "../Context/NewContext.jsx";
 import axios from "axios";
 import CheckoutPopup from "./CheckoutPopup";
 import { Button } from 'react-bootstrap';
 
 const Cart = () => {
-  const { cart, removeFromCart, clearCart } = useContext(AppContext);
+  const { cart, removeFromCart, clearCart } = useContext(NewAppContext);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartImage, setCartImage] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:8080";
 
   useEffect(() => {
     setCartItems(cart.length ? cart : []);
@@ -97,31 +97,39 @@ const Cart = () => {
   };
 
   return (
-    <div className="container mt-5 pt-5">
+    <div className="container py-5 my-4">
       <div className="row justify-content-center">
         <div className="col-md-10">
-          <div className="card shadow">
-            <div className="card-header bg-white">
-              <h4 className="mb-0">Shopping Cart</h4>
+          <div className="cart-card">
+            <div className="cart-card-header d-flex align-items-center justify-content-between">
+              <h4 className="mb-0 fw-bold d-flex align-items-center gap-2">
+                <i className="bi bi-cart3 text-primary"></i> Shopping Cart
+              </h4>
+              <span className="badge bg-primary rounded-pill fs-6 px-3 py-2">
+                {cartItems.reduce((acc, item) => acc + item.quantity, 0)} Items
+              </span>
             </div>
-            <div className="card-body">
+            <div className="cart-card-body">
               {cartItems.length === 0 ? (
                 <div className="text-center py-5">
                   <i className="bi bi-cart-x fs-1 text-muted"></i>
                   <h5 className="mt-3">Your cart is empty</h5>
-                  <a href="/" className="btn btn-primary mt-3">Continue Shopping</a>
+                  <p className="text-muted">Explore our catalog to add items to your cart.</p>
+                  <a href="/" className="btn btn-checkout mt-2 text-decoration-none">
+                    <i className="bi bi-arrow-left me-2"></i>Continue Shopping
+                  </a>
                 </div>
               ) : (
                 <>
                   <div className="table-responsive">
-                    <table className="table table-hover align-middle">
+                    <table className="table cart-table align-middle">
                       <thead>
                         <tr>
                           <th>Product</th>
                           <th>Price</th>
                           <th>Quantity</th>
                           <th>Total</th>
-                          <th>Action</th>
+                          <th className="text-end">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -132,22 +140,22 @@ const Cart = () => {
                                 <img
                                   src={`${baseUrl}/api/product/${item.id}/image`}
                                   alt={item.name}
-                                  className="rounded me-3"
-                                  width="80"
-                                  height="80"
+                                  className="rounded me-3 border"
+                                  width="70"
+                                  height="70"
                                   style={{ objectFit: "cover" }}
                                 />
                                 <div>
-                                  <h6 className="mb-0">{item.name}</h6>
-                                  <small className="text-muted">{item.brand}</small>
+                                  <h6 className="mb-0 cart-item-name">{item.name}</h6>
+                                  <small className="cart-item-brand">{item.brand}</small>
                                 </div>
                               </div>
                             </td>
-                            <td>₹ {item.price}</td>
+                            <td className="cart-item-price">₹ {item.price}</td>
                             <td>
                               <div className="input-group input-group-sm" style={{ width: "120px" }}>
                                 <button
-                                  className="btn btn-outline-secondary"
+                                  className="btn cart-qty-btn"
                                   type="button"
                                   onClick={() => handleDecreaseQuantity(item.id)}
                                 >
@@ -155,12 +163,12 @@ const Cart = () => {
                                 </button>
                                 <input
                                   type="text"
-                                  className="form-control text-center"
+                                  className="form-control text-center cart-qty-input"
                                   value={item.quantity}
                                   readOnly
                                 />
                                 <button
-                                  className="btn btn-outline-secondary"
+                                  className="btn cart-qty-btn"
                                   type="button"
                                   onClick={() => handleIncreaseQuantity(item.id)}
                                 >
@@ -168,11 +176,12 @@ const Cart = () => {
                                 </button>
                               </div>
                             </td>
-                            <td className="fw-bold">₹ {(item.price * item.quantity).toFixed(2)}</td>
-                            <td>
+                            <td className="fw-bold cart-item-price">₹ {(item.price * item.quantity).toFixed(2)}</td>
+                            <td className="text-end">
                               <button
-                                className="btn btn-sm btn-outline-danger"
+                                className="btn btn-sm btn-outline-danger rounded-circle p-2"
                                 onClick={() => handleRemoveFromCart(item.id)}
+                                title="Remove item"
                               >
                                 <i className="bi bi-trash"></i>
                               </button>
@@ -183,23 +192,20 @@ const Cart = () => {
                     </table>
                   </div>
 
-                  <div className="card mt-3">
-                    <div className="card-body">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <h5 className="mb-0">Total:</h5>
-                        <h5 className="mb-0">₹ {totalPrice.toFixed(2)}</h5>
-                      </div>
+                  <div className="cart-summary-card mt-4">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <h5 className="mb-0 fw-bold">Grand Total:</h5>
+                      <h4 className="mb-0 cart-total-price">₹ {totalPrice.toFixed(2)}</h4>
                     </div>
                   </div>
 
                   <div className="d-grid mt-4">
-                    <Button
-                      variant="primary"
-                      size="lg"
+                    <button
+                      className="btn-checkout py-3"
                       onClick={() => setShowModal(true)}
                     >
-                      Proceed to Checkout
-                    </Button>
+                      <i className="bi bi-credit-card me-2"></i>Proceed to Checkout
+                    </button>
                   </div>
                 </>
               )}
